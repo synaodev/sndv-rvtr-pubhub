@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  dbsrv:
+    container_name: 'dbsrv'
+    image: 'mysql:latest'
+    command: 'mysqld --default-authentication-plugin=mysql_native_password'
+    restart: 'always'
+    ports:
+      - '3306:3306'
+    networks:
+      - 'dbnet'
+    volumes:
+      - 'dbvol:/var/lib/mysql'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'synaodev'
+      MYSQL_USER: 'webapp'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_DATABASE: 'pubhub'
+
+networks:
+  dbnet:
+
+volumes:
+  dbvol:
