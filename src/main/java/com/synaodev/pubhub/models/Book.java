@@ -110,12 +110,15 @@ public class Book {
 			}
 			if (shouldAdd) {
 				tags.add(tag);
+				tag.setBook(this);
 			}
 		}
 	}
 	public void removeTag(Tag tag) {
 		if (tags != null) {
-			tags.remove(tag);
+			if (tags.remove(tag)) {
+				tag.setBook(null);
+			}
 		}
 	}
 	public boolean hasTag(Tag tag) {
