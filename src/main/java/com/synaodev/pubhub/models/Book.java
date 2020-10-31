@@ -37,7 +37,7 @@ public class Book {
 	@Lob
 	@Column(name = "content", columnDefinition = "BLOB")
 	private Byte[] content;
-	@OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(/*mappedBy = "book",*/ fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Tag> tags;
 	public Book(String isbn13, String title, String author, Byte[] content) {
 		this.isbn13 = isbn13;
@@ -110,14 +110,14 @@ public class Book {
 			}
 			if (shouldAdd) {
 				tags.add(tag);
-				tag.setBook(this);
+				// tag.setBook(this);
 			}
 		}
 	}
 	public void removeTag(Tag tag) {
 		if (tags != null) {
 			if (tags.remove(tag)) {
-				tag.setBook(null);
+				// tag.setBook(null);
 			}
 		}
 	}
