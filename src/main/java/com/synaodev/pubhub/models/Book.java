@@ -3,6 +3,7 @@ package com.synaodev.pubhub.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,26 +13,31 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="books")
 public class Book {
 	@Id
+	@NotEmpty
 	@Size(min = 13, max = 13)
 	private String isbn13;
 	@NotEmpty
 	@Size(max = 100)
 	private String title;
+	@NotEmpty
 	@Size(max = 80)
 	private String author;
+	@NotNull
 	private Date publishDate;
+	@NotNull
 	@Digits(integer = 3, fraction = 2)
 	private Double price;
 	@Lob
 	@Column(name = "content", columnDefinition = "BLOB")
 	private Byte[] content;
-	@OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Tag> tags;
 	public Book(String isbn13, String title, String author, Byte[] content) {
 		this.isbn13 = isbn13;

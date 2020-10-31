@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.synaodev.pubhub.models.Book;
-import com.synaodev.pubhub.repositories.BookRepository;
+import com.synaodev.pubhub.models.BookRepository;
 
 import org.springframework.stereotype.Service;
 
@@ -15,16 +15,18 @@ public class BookService {
 		this.repository = repository;
 	}
 	public List<Book> allBooks() {
-		return repository.getBooks();
+		return repository.findAll();
 	}
 	public List<Book> getBooksByTitle(String title) {
-		return repository.getBooksByTitle(title);
+		return repository.findByTitle(title);
 	}
 	public List<Book> getBooksByAuthor(String author) {
-		return repository.getBooksByAuthor(author);
+		return repository.findByAuthor(author);
 	}
 	public List<Book> getBooksLessThanPrice(Double price) {
-		return repository.getBooksLessThanPrice(price);
+		List<Book> books = repository.findAll();
+		books.removeIf((b) -> { return b.getPrice() >= price; });
+		return books;
 	}
 	public Optional<Book> getBook(String isbn) {
 		return repository.findById(isbn);

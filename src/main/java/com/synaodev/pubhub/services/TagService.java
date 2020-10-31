@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.synaodev.pubhub.models.Tag;
-import com.synaodev.pubhub.repositories.TagRepository;
+import com.synaodev.pubhub.models.TagRepository;
 
 import org.springframework.stereotype.Service;
 
@@ -15,10 +15,10 @@ public class TagService {
 		this.repository = repository;
 	}
 	public List<Tag> allTags() {
-		return repository.getTags();
+		return repository.findAll();
 	}
 	public List<Tag> getTagsByName(String name) {
-		return repository.getTagsByName(name);
+		return repository.findByName(name);
 	}
 	public Optional<Tag> getTag(Long id) {
 		return repository.findById(id);
