@@ -101,12 +101,31 @@ public class Book {
 	}
 	public void addTag(Tag tag) {
 		if (tags != null) {
-			tags.add(tag);
+			boolean shouldAdd = true;
+			for (Tag it : tags) {
+				if (it.getId() == tag.getId()) {
+					shouldAdd = false;
+					break;
+				}
+			}
+			if (shouldAdd) {
+				tags.add(tag);
+			}
 		}
 	}
 	public void removeTag(Tag tag) {
 		if (tags != null) {
 			tags.remove(tag);
 		}
+	}
+	public boolean hasTag(Tag tag) {
+		if (tags != null) {
+			for (Tag it : tags) {
+				if (it.getId() == tag.getId()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

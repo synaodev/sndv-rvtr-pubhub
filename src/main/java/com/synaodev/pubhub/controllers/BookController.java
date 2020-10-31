@@ -18,30 +18,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class BookController {
-	private final BookService service;
-	public BookController(BookService service) {
-		this.service = service;
+	private final BookService bookService;
+	public BookController(BookService bookService) {
+		this.bookService = bookService;
 	}
 	@GetMapping("/book")
 	public String index(Model model) {
-		List<Book> books = service.allBooks();
+		List<Book> books = bookService.allBooks();
 		model.addAttribute("books", books);
 		return "index.jsp";
 	}
 	@GetMapping("/book/{isbn}")
 	public String view(@PathVariable("isbn") String isbn, Model model) {
-		Optional<Book> optional = service.getBook(isbn);
+		Optional<Book> optional = bookService.getBook(isbn);
 		if (!optional.isPresent()) {
 			return "redirect:/book";
 		}
 		Book book = optional.get();
 		model.addAttribute("book", book);
-		return "view.jsp";
+		return "book.jsp";
 	}
 	@PostMapping("/api/book/post")
 	public String create(@Valid @ModelAttribute("book") Book book, BindingResult result) {
 		if (!result.hasErrors()) {
-			service.addBook(book);
+			bookService.addBook(book);
 		}
 		return "redirect:/book";
 	}

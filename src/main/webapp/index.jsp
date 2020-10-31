@@ -52,7 +52,7 @@
 				<th>Author</th>
 				<th>Publish Date</th>
 				<th>Price</th>
-				<th>Edit</th>
+				<th>View</th>
 			</thead>
 			<tbody>
 				<c:forEach var="book" items="${books}">
@@ -62,7 +62,7 @@
 						<td><c:out value="${book.author}" /></td>
 						<td><c:out value="${book.publishDate}" /></td>
 						<td><c:out value="${book.price}" /></td>
-						<td><a href="/book/${book.id}">Edit</a></td>
+						<td><a href="/book/${book.id}">View</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

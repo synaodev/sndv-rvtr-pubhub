@@ -28,6 +28,10 @@ public class TagService {
 		if (repository.existsById(id)) {
 			return false;
 		}
+		List<Tag> tags = repository.findByName(tag.getName());
+		if (!tags.isEmpty()) {
+			return false;
+		}
 		tag = repository.save(tag);
 		return true;
 	}

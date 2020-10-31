@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.synaodev.pubhub.models.Book;
 import com.synaodev.pubhub.models.BookRepository;
+import com.synaodev.pubhub.models.Tag;
 
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,28 @@ public class BookService {
 		List<Book> books = repository.findAll();
 		books.removeIf((b) -> { return b.getPrice() >= price; });
 		return books;
+	}
+	public List<Book> getBooksWithTag(Tag tag) {
+		List<Book> books = repository.findAll();
+		books.removeIf((b) -> {
+			List<Tag> tags = b.getTags();
+			for (Tag it : tags) {
+				if (it.getId() == tag.getId()) {
+					return false;
+				}
+			}
+			return true;
+		});
+		return books;
+	}
+	public boolean doesTagExist(Tag tag) {
+		List<Book> books = repository.findAll();
+		for (Book book : books) {
+			if (book.hasTag(tag)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	public Optional<Book> getBook(String isbn) {
 		return repository.findById(isbn);
