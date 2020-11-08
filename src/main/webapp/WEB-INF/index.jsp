@@ -13,8 +13,8 @@
 		<h1>PubHub</h1>
 	</header>
 	<div class="container">
-		<p><form:errors path="book.*" /></p>
-		<form:form action="/api/book/post" method="POST" modelAttribute="book">
+
+		<form:form action="/api/book/post" method="POST" modelAttribute="Book">
 			<p>
 				<form:label path="isbn13">ISBN</form:label>
 				<form:input path="isbn13"/>
@@ -30,10 +30,6 @@
 			<p>
 				<form:label path="price">Price</form:label>
 				<form:input path="price"/>
-			</p>
-			<p>
-				<form:label path="publishDate">Publish Date</form:label>
-				<form:input path="publishDate"/>
 			</p>
 			<p>
 				<form:label path="publishDate">Publish Date</form:label>
@@ -62,7 +58,7 @@
 						<td><c:out value="${book.author}" /></td>
 						<td><c:out value="${book.publishDate}" /></td>
 						<td><c:out value="${book.price}" /></td>
-						<td><a href="/book/${book.id}">View</a></td>
+						<td><a href="/book/${book.isbn13}">View</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -33,8 +33,8 @@
 			</ul>
 		</p>
 		<p>Add Tag:
-			<p><form:errors path="tag.*" /></p>
-			<form:form action="/api/tag/post/${book.isbn13}" method="POST" modelAttribute="tag">
+
+			<form:form action="/api/tag/post/${book.isbn13}" method="POST" modelAttribute="Tag">
 				<p>
 					<form:input path="name"/>
 				</p>

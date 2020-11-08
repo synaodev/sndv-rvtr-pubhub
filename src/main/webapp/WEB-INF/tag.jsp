@@ -32,7 +32,7 @@
 							<td><c:out value="${book.author}" /></td>
 							<td><c:out value="${book.publishDate}" /></td>
 							<td><c:out value="${book.price}" /></td>
-							<td><a href="/book/${book.id}">View</a></td>
+							<td><a href="/book/${book.isbn13}">View</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

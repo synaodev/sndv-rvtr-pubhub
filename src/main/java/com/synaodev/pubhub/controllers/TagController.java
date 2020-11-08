@@ -40,7 +40,7 @@ public class TagController {
 		return "tag.jsp";
 	}
 	@PostMapping("/api/tag/post/{isbn}")
-	public String create(@PathVariable("isbn") String isbn, @Valid @ModelAttribute("tag") Tag tag, BindingResult result) {
+	public String create(@PathVariable("isbn") String isbn, @Valid @ModelAttribute("Tag") Tag tag, BindingResult result) {
 		if (!result.hasErrors()) {
 			tagService.addTag(tag);
 			Book book = bookService.getBook(isbn).get();
