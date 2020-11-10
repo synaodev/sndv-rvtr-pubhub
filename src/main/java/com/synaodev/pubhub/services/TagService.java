@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.synaodev.pubhub.models.Tag;
-import com.synaodev.pubhub.models.TagRepository;
+import com.synaodev.pubhub.repositories.TagRepository;
 
 import org.springframework.stereotype.Service;
 

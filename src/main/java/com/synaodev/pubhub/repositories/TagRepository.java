@@ -1,6 +1,8 @@
-package com.synaodev.pubhub.models;
+package com.synaodev.pubhub.repositories;
 
 import java.util.List;
+
+import com.synaodev.pubhub.models.Tag;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

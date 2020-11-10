@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.synaodev.pubhub.models.Book;
-import com.synaodev.pubhub.models.BookRepository;
 import com.synaodev.pubhub.models.Tag;
+import com.synaodev.pubhub.repositories.BookRepository;
 
 import org.springframework.stereotype.Service;
 
