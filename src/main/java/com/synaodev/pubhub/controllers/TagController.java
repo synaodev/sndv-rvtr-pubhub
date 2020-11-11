@@ -12,11 +12,11 @@ import com.synaodev.pubhub.services.TagService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class TagController {
@@ -25,6 +25,13 @@ public class TagController {
 	public TagController(BookService bookService, TagService tagService) {
 		this.bookService = bookService;
 		this.tagService = tagService;
+	}
+	@GetMapping("/tag")
+	public String search(@RequestParam String query, Model model) {
+		List<Tag> results = tagService.getTagsLike(query);
+		model.addAttribute("query", query);
+		model.addAttribute("results", results);
+		return "find.jsp";
 	}
 	@GetMapping("/tag/{id}")
 	public String view(@PathVariable("id") Long id, Model model) {
@@ -53,7 +60,7 @@ public class TagController {
 		}
 		return String.format("redirect:/book/%s", isbn13);
 	}
-	@DeleteMapping("/tag/{id}/{isbn13}")
+	@PostMapping("/tag/{id}/{isbn13}")
 	public String remove(@PathVariable("id") Long id, @PathVariable("isbn13") String isbn13) {
 		Tag tag = tagService.getTag(id);
 		if (tag == null) {
@@ -64,6 +71,7 @@ public class TagController {
 			return "redirect:/";
 		}
 		book.removeTag(tag);
+		book = bookService.updateBook(book);
 		List<Book> booksWithTag = bookService.getBooksWithTag(tag);
 		if (booksWithTag.isEmpty()) {
 			tagService.deleteTag(id);

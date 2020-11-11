@@ -20,6 +20,9 @@ public class TagService {
 	public List<Tag> getTagsByName(String name) {
 		return repository.findByName(name);
 	}
+	public List<Tag> getTagsLike(String name) {
+		return repository.findByNameContainingIgnoreCase(name);
+	}
 	public Tag getTag(Long id) {
 		Optional<Tag> optional = repository.findById(id);
 		if (!optional.isPresent()) {
@@ -30,14 +33,20 @@ public class TagService {
 	public Tag addTag(Tag tag) {
 		List<Tag> tags = repository.findByName(tag.getName());
 		if (!tags.isEmpty()) {
-			return null;
+			for (Tag it : tags) {
+				String itName = it.getName();
+				if (itName.compareTo(tag.getName()) == 0) {
+					return it;
+				}
+			}
+			return tag;
 		}
 		return repository.save(tag);
 	}
 	public Tag updateTag(Tag tag) {
 		Long id = tag.getId();
 		if (!repository.existsById(id)) {
-			return null;
+			return tag;
 		}
 		return repository.save(tag);
 	}

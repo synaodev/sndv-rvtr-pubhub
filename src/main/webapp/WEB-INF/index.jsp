@@ -14,6 +14,14 @@
 	</header>
 	<main>
 		<div>
+			<form action="/tag" method="GET">
+				<label for="name">Search for Tag:</label>
+				<input type="text" name="query"><br>
+				<input type="submit" value="Go">
+			</form>
+		</div>
+		<hr>
+		<div>
 			<form:form action="/book" method="POST" modelAttribute="form-book">
 				<form:errors path="isbn13"/><br>
 				<form:label path="isbn13">ISBN:</form:label>

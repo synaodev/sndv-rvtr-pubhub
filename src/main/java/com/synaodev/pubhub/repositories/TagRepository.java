@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface TagRepository extends CrudRepository<Tag, Long> {
 	public List<Tag> findAll();
 	public List<Tag> findByName(String name);
+	public List<Tag> findByNameContainingIgnoreCase(String name);
 }

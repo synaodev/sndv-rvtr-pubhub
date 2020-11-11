@@ -23,8 +23,10 @@
 				<c:forEach var="it" items="${book.tags}">
 					<li>
 						<c:out value="${it.name}"/>
-						<button><a href="/tag/${it.id}">View</a></button>
-						<form action="/tag/${it.id}/${book.isbn13}" method="DELETE">
+						<form action="/tag/${it.id}" method="GET">
+							<input type="submit" value="View">
+						</form>
+						<form action="/tag/${it.id}/${book.isbn13}" method="POST">
 							<input type="submit" value="Remove">
 						</form>
 					</li>

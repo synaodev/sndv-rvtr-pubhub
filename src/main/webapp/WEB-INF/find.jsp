@@ -9,19 +9,17 @@
 </head>
 <body>
 	<header>
-		<h1><c:out value="${tag.name}"/></h1>
+		<h1>Search Results for <c:out value="${search}"/></h1>
 	</header>
 	<main>
 		<a href="/">Back</a>
-		<p>Books:
-			<ul>
-				<c:forEach var="it" items="${books}">
-					<li>
-						<a href="/book/${it.isbn13}"><c:out value="${it.title}"/></a>
-					</li>
-				</c:forEach>
-			</ul>
-		</p>
+		<ul>
+			<c:forEach var="it" items="${results}">
+				<li>
+					<a href="/tag/${it.id}"><c:out value="${it.name}"/></a>
+				</li>
+			</c:forEach>
+		</ul>
 	</main>
 </body>
 </html>

@@ -68,14 +68,14 @@ public class BookService {
 	public Book addBook(Book book) {
 		String isbn = book.getIsbn13();
 		if (repository.existsById(isbn)) {
-			return null;
+			return repository.findById(isbn).get();
 		}
 		return repository.save(book);
 	}
 	public Book updateBook(Book book) {
 		String isbn = book.getIsbn13();
 		if (!repository.existsById(isbn)) {
-			return null;
+			return book;
 		}
 		return repository.save(book);
 	}

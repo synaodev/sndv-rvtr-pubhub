@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
@@ -37,7 +37,7 @@ public class Book {
 	@Lob
 	@Column(name = "content", columnDefinition = "BLOB")
 	private Byte[] content;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Tag> tags;
 	public Book(String isbn13, String title, String author, Double price, Byte[] content) {
 		this.isbn13 = isbn13;
