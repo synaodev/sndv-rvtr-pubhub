@@ -58,6 +58,21 @@ public class BookService {
 		});
 		return books;
 	}
+	public List<Book> getBooksWithTagInList(List<Tag> query) {
+		List<Book> books = repository.findAll();
+		books.removeIf((b) -> {
+			List<Tag> tags = b.getTags();
+			for (Tag i : tags) {
+				for (Tag j : query) {
+					if (i.getId().longValue() == j.getId().longValue()) {
+						return false;
+					}
+				}
+			}
+			return true;
+		});
+		return books;
+	}
 	public Book getBook(String isbn) {
 		Optional<Book> optional = repository.findById(isbn);
 		if (!optional.isPresent()) {

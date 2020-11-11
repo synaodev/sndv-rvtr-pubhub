@@ -9,14 +9,14 @@
 </head>
 <body>
 	<header>
-		<h1>Search Results for <c:out value="${search}"/></h1>
+		<h1>Search Results for<c:out value="${query}"/></h1>
 	</header>
 	<main>
 		<a href="/">Back</a>
 		<ul>
 			<c:forEach var="it" items="${results}">
 				<li>
-					<a href="/tag/${it.id}"><c:out value="${it.name}"/></a>
+					<a href="/book/${it.isbn13}"><c:out value="${it.title}"/></a>
 				</li>
 			</c:forEach>
 		</ul>

@@ -14,7 +14,7 @@
 	</header>
 	<main>
 		<div>
-			<form action="/tag" method="GET">
+			<form action="/book" method="GET">
 				<label for="name">Search for Tag:</label>
 				<input type="text" name="query"><br>
 				<input type="submit" value="Go">

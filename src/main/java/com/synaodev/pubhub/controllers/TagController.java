@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class TagController {
@@ -25,13 +24,6 @@ public class TagController {
 	public TagController(BookService bookService, TagService tagService) {
 		this.bookService = bookService;
 		this.tagService = tagService;
-	}
-	@GetMapping("/tag")
-	public String search(@RequestParam String query, Model model) {
-		List<Tag> results = tagService.getTagsLike(query);
-		model.addAttribute("query", query);
-		model.addAttribute("results", results);
-		return "find.jsp";
 	}
 	@GetMapping("/tag/{id}")
 	public String view(@PathVariable("id") Long id, Model model) {
