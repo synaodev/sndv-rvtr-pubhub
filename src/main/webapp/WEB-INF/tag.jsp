@@ -12,7 +12,7 @@
 		<h1><c:out value="${tag.name}"/></h1>
 	</header>
 	<main>
-		<a href="/book">Back</a>
+		<a href="/">Back</a>
 		<p>Books:
 			<ul>
 				<c:forEach var="it" items="${books}">

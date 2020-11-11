@@ -30,11 +30,11 @@ public class TagController {
 	public String view(@PathVariable("id") Long id, Model model) {
 		Tag tag = tagService.getTag(id);
 		if (tag == null) {
-			return "redirect:/book";
+			return "redirect:/";
 		}
 		List<Book> books = bookService.getBooksWithTagName(tag.getName());
 		if (books.isEmpty()) {
-			return "redirect:/book";
+			return "redirect:/";
 		}
 		model.addAttribute("tag", tag);
 		model.addAttribute("books", books);
@@ -45,7 +45,7 @@ public class TagController {
 		if (!result.hasErrors()) {
 			Book book = bookService.getBook(isbn13);
 			if (book == null) {
-				return "redirect:/book";
+				return "redirect:/";
 			}
 			tag = tagService.addTag(tag);
 			book.addTag(tag);
@@ -57,11 +57,11 @@ public class TagController {
 	public String remove(@PathVariable("id") Long id, @PathVariable("isbn13") String isbn13) {
 		Tag tag = tagService.getTag(id);
 		if (tag == null) {
-			return "redirect:/book";
+			return "redirect:/";
 		}
 		Book book = bookService.getBook(isbn13);
 		if (book == null) {
-			return "redirect:/book";
+			return "redirect:/";
 		}
 		book.removeTag(tag);
 		List<Book> booksWithTag = bookService.getBooksWithTag(tag);

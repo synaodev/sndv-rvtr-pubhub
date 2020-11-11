@@ -1,7 +1,5 @@
 package com.synaodev.pubhub.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import com.synaodev.pubhub.models.Book;
@@ -22,24 +20,18 @@ public class BookController {
 	public BookController(BookService bookService) {
 		this.bookService = bookService;
 	}
-	@GetMapping("/book")
-	public String index(Model model, @ModelAttribute("form-book") Book book) {
-		List<Book> books = bookService.allBooks();
-		model.addAttribute("books", books);
-		return "index.jsp";
-	}
 	@PostMapping("/book")
 	public String create(@Valid @ModelAttribute("form-book") Book book, BindingResult result) {
 		if (!result.hasErrors()) {
 			bookService.addBook(book);
 		}
-		return "redirect:/book";
+		return "redirect:/";
 	}
 	@GetMapping("/book/{isbn13}")
 	public String view(@PathVariable("isbn13") String isbn13, Model model, @ModelAttribute("form-tag") Tag tag) {
 		Book book = bookService.getBook(isbn13);
 		if (book == null) {
-			return "redirect:/book";
+			return "redirect:/";
 		}
 		model.addAttribute("book", book);
 		model.addAttribute("tag", tag);

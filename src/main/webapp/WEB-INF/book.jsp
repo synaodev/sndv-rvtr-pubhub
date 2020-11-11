@@ -13,7 +13,7 @@
 		<h1><c:out value="${book.title}"/></h1>
 	</header>
 	<main>
-		<a href="/book">Back</a>
+		<a href="/">Back</a>
 		<p>ISBN: <c:out value="${book.isbn13}"/></p>
 		<p>Author: <c:out value="${book.author}"/></p>
 		<p>Publish Date: <c:out value="${book.publishDate}"/></p>
