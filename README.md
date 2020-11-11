@@ -16,30 +16,28 @@
   * maven-wrapper.properties
   * MavenWrapperDownloader.java
 * src/
-  * main/
-    * java/com/synaodev/pubhub/
-      * controllers/
-        * BookController.java
-        * HomeController.java
-        * TagController.java
-      * models/
-        * Book.java
-        * Tag.java
-      * repositories/
-        * BookRepository.java
-        * TagRepository.java
-      * services/
-        * BookService.java
-        * TagService.java
-      * Application.java
-    * resources/
-      * application.properties
-    * webapp/WEB-INF/
-      * book.jsp
-      * index.jsp
-      * tag.jsp
-  * test/java/com/synaodev/pubhub/
-    * ApplicationTests.java
+  * main/java/com/synaodev/pubhub/
+    * controllers/
+      * BookController.java
+      * HomeController.java
+      * TagController.java
+    * models/
+      * Book.java
+      * Tag.java
+    * repositories/
+      * BookRepository.java
+      * TagRepository.java
+    * services/
+      * BookService.java
+      * TagService.java
+    * Application.java
+  * resources/
+    * application.properties
+  * webapp/WEB-INF/
+    * book.jsp
+    * find.jsp
+    * index.jsp
+    * tag.jsp
 * .editorconfig
 * .gitignore
 * .gitattributes
