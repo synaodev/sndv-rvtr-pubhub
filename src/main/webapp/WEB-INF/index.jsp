@@ -12,35 +12,32 @@
 	<header>
 		<h1>PubHub</h1>
 	</header>
-	<div class="container">
-
-		<form:form action="/api/book/post" method="POST" modelAttribute="Book">
-			<p>
-				<form:label path="isbn13">ISBN</form:label>
-				<form:input path="isbn13"/>
-			</p>
-			<p>
-				<form:label path="title">Title</form:label>
-				<form:input path="title"/>
-			</p>
-			<p>
-				<form:label path="author">Author</form:label>
-				<form:input path="author"/>
-			</p>
-			<p>
-				<form:label path="price">Price</form:label>
-				<form:input path="price"/>
-			</p>
-			<p>
-				<form:label path="publishDate">Publish Date</form:label>
-				<form:input path="publishDate"/>
-			</p>
-			<p>
-				<input type="submit" value="Add"/>
-			</p>
-		</form:form>
-	</div>
 	<main>
+		<div>
+			<form:form action="/book" method="POST" modelAttribute="form-book">
+				<form:errors path="isbn13"/><br>
+				<form:label path="isbn13">ISBN:</form:label>
+				<form:input path="isbn13"/><br>
+
+				<form:errors path="title"/><br>
+				<form:label path="title">Title:</form:label>
+				<form:input path="title"/><br>
+
+				<form:errors path="author"/><br>
+				<form:label path="author">Author:</form:label>
+				<form:input path="author"/><br>
+
+				<form:errors path="publishDate"/><br>
+				<form:label path="publishDate">Publish Date:</form:label>
+				<form:input path="publishDate"/><br>
+
+				<form:errors path="price"/><br>
+				<form:label path="price">Price:</form:label>
+				<form:input path="price"/><br>
+
+				<input type="submit" value="Add Book"/>
+			</form:form>
+		</div>
 		<table>
 			<thead>
 				<th>ISBN</th>
@@ -51,14 +48,14 @@
 				<th>View</th>
 			</thead>
 			<tbody>
-				<c:forEach var="book" items="${books}">
+				<c:forEach var="it" items="${books}">
 					<tr>
-						<td><c:out value="${book.isbn13}" /></td>
-						<td><c:out value="${book.title}" /></td>
-						<td><c:out value="${book.author}" /></td>
-						<td><c:out value="${book.publishDate}" /></td>
-						<td><c:out value="${book.price}" /></td>
-						<td><a href="/book/${book.isbn13}">View</a></td>
+						<td><c:out value="${it.isbn13}" /></td>
+						<td><c:out value="${it.title}" /></td>
+						<td><c:out value="${it.author}" /></td>
+						<td><c:out value="${it.publishDate}" /></td>
+						<td><c:out value="${it.price}" /></td>
+						<td><a href="/book/${it.isbn13}">View</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

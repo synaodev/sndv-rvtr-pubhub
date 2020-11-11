@@ -20,28 +20,26 @@ public class TagService {
 	public List<Tag> getTagsByName(String name) {
 		return repository.findByName(name);
 	}
-	public Optional<Tag> getTag(Long id) {
-		return repository.findById(id);
-	}
-	public boolean addTag(Tag tag) {
-		Long id = tag.getId();
-		if (repository.existsById(id)) {
-			return false;
+	public Tag getTag(Long id) {
+		Optional<Tag> optional = repository.findById(id);
+		if (!optional.isPresent()) {
+			return null;
 		}
+		return optional.get();
+	}
+	public Tag addTag(Tag tag) {
 		List<Tag> tags = repository.findByName(tag.getName());
 		if (!tags.isEmpty()) {
-			return false;
+			return null;
 		}
-		tag = repository.save(tag);
-		return true;
+		return repository.save(tag);
 	}
-	public boolean updateTag(Tag tag) {
+	public Tag updateTag(Tag tag) {
 		Long id = tag.getId();
 		if (!repository.existsById(id)) {
-			return false;
+			return null;
 		}
-		tag = repository.save(tag);
-		return true;
+		return repository.save(tag);
 	}
 	public boolean deleteTag(Long id) {
 		if (!repository.existsById(id)) {

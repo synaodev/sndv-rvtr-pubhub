@@ -26,7 +26,9 @@ public class BookService {
 	}
 	public List<Book> getBooksLessThanPrice(Double price) {
 		List<Book> books = repository.findAll();
-		books.removeIf((b) -> { return b.getPrice() >= price; });
+		books.removeIf((b) -> {
+			return b.getPrice().doubleValue() >= price.doubleValue();
+		});
 		return books;
 	}
 	public List<Book> getBooksWithTag(Tag tag) {
@@ -34,7 +36,7 @@ public class BookService {
 		books.removeIf((b) -> {
 			List<Tag> tags = b.getTags();
 			for (Tag it : tags) {
-				if (it.getId() == tag.getId()) {
+				if (it.getId().longValue() == tag.getId().longValue()) {
 					return false;
 				}
 			}
@@ -42,33 +44,40 @@ public class BookService {
 		});
 		return books;
 	}
-	public boolean doesTagExist(Tag tag) {
+	public List<Book> getBooksWithTagName(String name) {
 		List<Book> books = repository.findAll();
-		for (Book book : books) {
-			if (book.hasTag(tag)) {
-				return true;
+		books.removeIf((b) -> {
+			List<Tag> tags = b.getTags();
+			for (Tag it : tags) {
+				String itName = it.getName();
+				if (itName.compareTo(name) == 0) {
+					return false;
+				}
 			}
+			return true;
+		});
+		return books;
+	}
+	public Book getBook(String isbn) {
+		Optional<Book> optional = repository.findById(isbn);
+		if (!optional.isPresent()) {
+			return null;
 		}
-		return false;
+		return optional.get();
 	}
-	public Optional<Book> getBook(String isbn) {
-		return repository.findById(isbn);
-	}
-	public boolean addBook(Book book) {
+	public Book addBook(Book book) {
 		String isbn = book.getIsbn13();
 		if (repository.existsById(isbn)) {
-			return false;
+			return null;
 		}
-		book = repository.save(book);
-		return true;
+		return repository.save(book);
 	}
-	public boolean updateBook(Book book) {
+	public Book updateBook(Book book) {
 		String isbn = book.getIsbn13();
 		if (!repository.existsById(isbn)) {
-			return false;
+			return null;
 		}
-		book = repository.save(book);
-		return true;
+		return repository.save(book);
 	}
 	public boolean deleteBook(String isbn) {
 		if (!repository.existsById(isbn)) {

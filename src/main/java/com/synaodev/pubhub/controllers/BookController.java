@@ -1,7 +1,6 @@
 package com.synaodev.pubhub.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -24,28 +23,26 @@ public class BookController {
 		this.bookService = bookService;
 	}
 	@GetMapping("/book")
-	public String index(Model model, @ModelAttribute("Book") Book book) {
+	public String index(Model model, @ModelAttribute("form-book") Book book) {
 		List<Book> books = bookService.allBooks();
 		model.addAttribute("books", books);
-		model.addAttribute("Book", book);
 		return "index.jsp";
 	}
-	@GetMapping("/book/{isbn}")
-	public String view(@PathVariable("isbn") String isbn, Model model, @ModelAttribute("Tag") Tag tag) {
-		Optional<Book> optional = bookService.getBook(isbn);
-		if (!optional.isPresent()) {
-			return "redirect:/book";
-		}
-		Book book = optional.get();
-		model.addAttribute("book", book);
-		model.addAttribute("Tag", tag);
-		return "book.jsp";
-	}
-	@PostMapping("/api/book/post")
-	public String create(@Valid @ModelAttribute("book") Book book, BindingResult result) {
+	@PostMapping("/book")
+	public String create(@Valid @ModelAttribute("form-book") Book book, BindingResult result) {
 		if (!result.hasErrors()) {
 			bookService.addBook(book);
 		}
 		return "redirect:/book";
+	}
+	@GetMapping("/book/{isbn13}")
+	public String view(@PathVariable("isbn13") String isbn13, Model model, @ModelAttribute("form-tag") Tag tag) {
+		Book book = bookService.getBook(isbn13);
+		if (book == null) {
+			return "redirect:/book";
+		}
+		model.addAttribute("book", book);
+		model.addAttribute("tag", tag);
+		return "book.jsp";
 	}
 }

@@ -1,7 +1,6 @@
 package com.synaodev.pubhub.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -29,34 +28,46 @@ public class TagController {
 	}
 	@GetMapping("/tag/{id}")
 	public String view(@PathVariable("id") Long id, Model model) {
-		Optional<Tag> optional = tagService.getTag(id);
-		if (!optional.isPresent()) {
-			return "redirect:/";
+		Tag tag = tagService.getTag(id);
+		if (tag == null) {
+			return "redirect:/book";
 		}
-		Tag tag = optional.get();
-		List<Book> books = bookService.getBooksWithTag(tag);
+		List<Book> books = bookService.getBooksWithTagName(tag.getName());
+		if (books.isEmpty()) {
+			return "redirect:/book";
+		}
 		model.addAttribute("tag", tag);
 		model.addAttribute("books", books);
 		return "tag.jsp";
 	}
-	@PostMapping("/api/tag/post/{isbn}")
-	public String create(@PathVariable("isbn") String isbn, @Valid @ModelAttribute("Tag") Tag tag, BindingResult result) {
+	@PostMapping("/tag/{isbn13}")
+	public String create(@PathVariable("isbn13") String isbn13, @Valid @ModelAttribute("form-tag") Tag tag, BindingResult result) {
 		if (!result.hasErrors()) {
-			tagService.addTag(tag);
-			Book book = bookService.getBook(isbn).get();
+			Book book = bookService.getBook(isbn13);
+			if (book == null) {
+				return "redirect:/book";
+			}
+			tag = tagService.addTag(tag);
 			book.addTag(tag);
-			bookService.updateBook(book);
+			book = bookService.updateBook(book);
 		}
-		return String.format("redirect:/book/%s", isbn);
+		return String.format("redirect:/book/%s", isbn13);
 	}
-	@DeleteMapping("/api/tag/delete/{id}/{isbn}")
-	public String remove(@PathVariable("id") Long id, @PathVariable("isbn") String isbn) {
-		Tag tag = tagService.getTag(id).get();
-		Book book = bookService.getBook(isbn).get();
+	@DeleteMapping("/tag/{id}/{isbn13}")
+	public String remove(@PathVariable("id") Long id, @PathVariable("isbn13") String isbn13) {
+		Tag tag = tagService.getTag(id);
+		if (tag == null) {
+			return "redirect:/book";
+		}
+		Book book = bookService.getBook(isbn13);
+		if (book == null) {
+			return "redirect:/book";
+		}
 		book.removeTag(tag);
-		if (!bookService.doesTagExist(tag)) {
+		List<Book> booksWithTag = bookService.getBooksWithTag(tag);
+		if (booksWithTag.isEmpty()) {
 			tagService.deleteTag(id);
 		}
-		return String.format("redirect:/book/%s", isbn);
+		return String.format("redirect:/book/%s", isbn13);
 	}
 }

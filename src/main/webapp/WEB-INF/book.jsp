@@ -10,22 +10,21 @@
 </head>
 <body>
 	<header>
-		<h1>PubHub</h1>
+		<h1><c:out value="${book.title}"/></h1>
 	</header>
 	<main>
 		<a href="/book">Back</a>
 		<p>ISBN: <c:out value="${book.isbn13}"/></p>
-		<p>Title: <c:out value="${book.title}"/></p>
 		<p>Author: <c:out value="${book.author}"/></p>
 		<p>Publish Date: <c:out value="${book.publishDate}"/></p>
 		<p>Price: <c:out value="${book.price}"/></p>
 		<p>Tags:
 			<ul>
-				<c:forEach var="tag" items="${book.tags}">
+				<c:forEach var="it" items="${book.tags}">
 					<li>
-						<c:out value="${tag.name}"/>
-						<button><a href="/tag/${tag.id}">View</a></button>
-						<form action="/api/tag/delete/${tag.id}/${book.isbn13}" method="DELETE">
+						<c:out value="${it.name}"/>
+						<button><a href="/tag/${it.id}">View</a></button>
+						<form action="/tag/${it.id}/${book.isbn13}" method="DELETE">
 							<input type="submit" value="Remove">
 						</form>
 					</li>
@@ -33,14 +32,12 @@
 			</ul>
 		</p>
 		<p>Add Tag:
+			<form:form action="/tag/${book.isbn13}" method="POST" modelAttribute="form-tag">
+				<form:errors path="name"/><br>
+				<form:label path="name">Name:</form:label>
+				<form:input path="name"/><br>
 
-			<form:form action="/api/tag/post/${book.isbn13}" method="POST" modelAttribute="Tag">
-				<p>
-					<form:input path="name"/>
-				</p>
-				<p>
-					<input type="submit" value="Add"/>
-				</p>
+				<input type="submit" value="Add"/>
 			</form:form>
 		</p>
 	</main>

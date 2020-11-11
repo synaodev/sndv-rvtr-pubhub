@@ -9,34 +9,18 @@
 </head>
 <body>
 	<header>
-		<h1>PubHub</h1>
+		<h1><c:out value="${tag.name}"/></h1>
 	</header>
 	<main>
 		<a href="/book">Back</a>
-		<p>Tag: <c:out value="${tag.name}"/></p>
 		<p>Books:
-			<table>
-				<thead>
-					<th>ISBN</th>
-					<th>Title</th>
-					<th>Author</th>
-					<th>Publish Date</th>
-					<th>Price</th>
-					<th>View</th>
-				</thead>
-				<tbody>
-					<c:forEach var="book" items="${books}">
-						<tr>
-							<td><c:out value="${book.isbn13}" /></td>
-							<td><c:out value="${book.title}" /></td>
-							<td><c:out value="${book.author}" /></td>
-							<td><c:out value="${book.publishDate}" /></td>
-							<td><c:out value="${book.price}" /></td>
-							<td><a href="/book/${book.isbn13}">View</a></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+			<ul>
+				<c:forEach var="it" items="${books}">
+					<li>
+						<a href="/book/${it.isbn13}"><c:out value="${it.name}"/></a>
+					</li>
+				</c:forEach>
+			</ul>
 		</p>
 	</main>
 </body>

@@ -37,21 +37,32 @@ public class Book {
 	@Lob
 	@Column(name = "content", columnDefinition = "BLOB")
 	private Byte[] content;
-	@OneToMany(/*mappedBy = "book",*/ fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Tag> tags;
-	public Book(String isbn13, String title, String author, Byte[] content) {
+	public Book(String isbn13, String title, String author, Double price, Byte[] content) {
 		this.isbn13 = isbn13;
 		this.title = title;
 		this.author = author;
 		this.publishDate = new Date();
+		this.price = price;
 		this.content = content;
 	}
-	public Book(String isbn13, String title, String author, Date publishDate, Byte[] content) {
+	public Book(String isbn13, String title, String author, Date publishDate, Double price, Byte[] content) {
 		this.isbn13 = isbn13;
 		this.title = title;
 		this.author = author;
 		this.publishDate = publishDate;
+		this.price = price;
 		this.content = content;
+	}
+	public Book(String isbn13, String title, String author, Date publishDate, Double price, Byte[] content, List<Tag> tags) {
+		this.isbn13 = isbn13;
+		this.title = title;
+		this.author = author;
+		this.publishDate = publishDate;
+		this.price = price;
+		this.content = content;
+		this.tags = tags;
 	}
 	public Book() {
 		this.isbn13 = null;
@@ -103,28 +114,27 @@ public class Book {
 		if (tags != null) {
 			boolean shouldAdd = true;
 			for (Tag it : tags) {
-				if (it.getId() == tag.getId()) {
+				if (it.getId().longValue() == tag.getId().longValue()) {
 					shouldAdd = false;
 					break;
 				}
 			}
 			if (shouldAdd) {
 				tags.add(tag);
-				// tag.setBook(this);
 			}
 		}
 	}
-	public void removeTag(Tag tag) {
+	public boolean removeTag(Tag tag) {
 		if (tags != null) {
-			if (tags.remove(tag)) {
-				// tag.setBook(null);
-			}
+			return tags.remove(tag);
 		}
+		return false;
 	}
-	public boolean hasTag(Tag tag) {
+	public boolean hasTagByName(String name) {
 		if (tags != null) {
 			for (Tag it : tags) {
-				if (it.getId() == tag.getId()) {
+				String itName = it.getName();
+				if (itName.compareTo(name) == 0) {
 					return true;
 				}
 			}
